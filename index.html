@@ -25,11 +25,13 @@
 		  type: "POST",
 		  url: "https://kt-api-test.herokuapp.com/api/signup",
 		  data: dataPayload,
-		  success: function(){
+		  success: function(data, status, jqxhr){
 			window.location = 'login.html';
 		  },
-		  failure: function(){
-			usernameField.setCustomValidity("Username already taken.")
+		  complete: function(jqxhr, status){
+		    if (status === 'error') {
+				usernameField.setCustomValidity("Username already taken.");
+			}
 		  },
 		  dataType: "json",
 		  contentType : "application/json"
