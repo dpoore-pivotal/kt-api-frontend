@@ -10,7 +10,7 @@
 </head>
 
 <script>
-	function signup() {
+	function login() {
 		var usernameField = $('#username')[0];
 		var passwordField = $('#password')[0];
 		
@@ -23,13 +23,12 @@
 		
 		$.ajax({
 		  type: "POST",
-		  url: "https://kt-api-test.herokuapp.com/api/signup",
+		  url: "https://kt-api-test.herokuapp.com/api/login",
 		  data: dataPayload,
 		  success: function(){
-			window.location = 'login.html';
+			window.location = 'success.html';
 		  },
 		  failure: function(){
-			usernameField.setCustomValidity("Username already taken.")
 		  },
 		  dataType: "json",
 		  contentType : "application/json"
@@ -38,7 +37,7 @@
 </script>
 <body>
 
-<h1>signup</h1>
+<h1>login</h1>
 <div>
   <div>
     <label for="username">username</label>
@@ -49,7 +48,7 @@
     <input type="password" name="password" id="password">
   </div>
   <div>
-    <button onclick="signup();">sign up</button>
+    <button onclick="login();">login</button>
   </div>
 </div>
 
