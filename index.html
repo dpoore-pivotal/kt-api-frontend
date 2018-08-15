@@ -11,8 +11,8 @@
 
 <script>
 	function signup() {
-		var username = $('#username').value;
-		var password = $('#password').value;
+		var username = $('#username')[0].value;
+		var password = $('#password')[0].value;
 		
 		$.ajax({
 		  type: "POST",
