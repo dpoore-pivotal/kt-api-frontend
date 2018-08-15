@@ -2,23 +2,47 @@
 <html>
 <head>
 <title>kt api frontend</title>
+
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
 </head>
+
+<script>
+	function signup() {
+		var username = $('#username').value;
+		var password = $('#password').value;
+		
+		$.ajax({
+		  type: "POST",
+		  url: "https://kt-api-test.herokuapp.com/api/signup",
+		  data: {
+			username: username,
+			password: password
+		  },
+		  success: function(){},
+		  dataType: "json",
+		  contentType : "application/json"
+		});
+	}
+</script>
 <body>
 
 <h1>signup</h1>
-<form action="https://kt-api-test.herokuapp.com/api/signup" method="post">
+<div>
   <div>
     <label for="username">username</label>
     <input name="username" id="username">
   </div>
   <div>
     <label for="password">password</label>
-    <input name="password" id="password">
+    <input type="password" name="password" id="password">
   </div>
   <div>
-    <button>sign up</button>
+    <button onclick="signup();">sign up</button>
   </div>
-</form>
+</div>
 
 </body>
 </html>
