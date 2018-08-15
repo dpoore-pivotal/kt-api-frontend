@@ -25,10 +25,12 @@
 		  type: "POST",
 		  url: "https://kt-api-test.herokuapp.com/api/login",
 		  data: dataPayload,
-		  success: function(){
-			window.location = 'success.html';
-		  },
-		  failure: function(){
+		  complete: function(jqxhr, status){
+		    if (status === 'error') {
+				usernameField.setCustomValidity("Invalid login.");
+			} else {
+				window.location = 'success.html';
+			}
 		  },
 		  dataType: "json",
 		  contentType : "application/json"
