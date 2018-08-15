@@ -14,13 +14,15 @@
 		var username = $('#username')[0].value;
 		var password = $('#password')[0].value;
 		
+		var dataPayload = JSON.stringify({
+			"username": username,
+			"password": password
+		});
+		
 		$.ajax({
 		  type: "POST",
 		  url: "https://kt-api-test.herokuapp.com/api/signup",
-		  data: {
-			"username": username,
-			"password": password
-		  },
+		  data: dataPayload,
 		  success: function(){},
 		  dataType: "json",
 		  contentType : "application/json"
