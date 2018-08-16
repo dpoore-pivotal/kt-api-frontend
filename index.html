@@ -5,7 +5,10 @@
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
   <link rel="icon" href="favicon.ico" type="image/x-icon">
 
-<title>kt api frontend</title>
+  <link rel = "stylesheet" type = "text/css" href = "main.css" />
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+<title>Kotlin API Signup Flow</title>
 
 <script
   src="https://code.jquery.com/jquery-3.3.1.min.js"
@@ -18,7 +21,10 @@
 		var usernameField = $('#username')[0];
 		var passwordField = $('#password')[0];
 
-		usernameField.setCustomValidity("");
+    var errorMessage = $('.InputErrorMessage')[0];
+
+		$(usernameField).removeClass('Input--error');
+    $(errorMessage).hide();
 
 		var dataPayload = JSON.stringify({
 			"username": usernameField.value,
@@ -31,30 +37,34 @@
 		  data: dataPayload,
 		  complete: function(jqxhr, status){
 		    if (status === 'error') {
-				usernameField.setCustomValidity("Username already taken.");
-			} else {
-				window.location = 'login.html';
-			}
+          $(errorMessage).show();
+  				$(usernameField).addClass('Input--error');
+  			} else {
+  				window.location = 'login.html';
+  			}
 		  },
-		  dataType: "json",
 		  contentType : "application/json"
 		});
 	}
 </script>
 <body>
 
-<h1>signup</h1>
-<div>
-  <div>
-    <label for="username">username</label>
-    <input name="username" id="username">
+<div class="Title">
+  <h1>Signup</h1>
+</div>
+
+<div class="Form">
+  <div class="Form__row">
+    <label for="username">Username</label>
+    <input class="Input" name="username" id="username">
+    <div class="InputErrorMessage">Username unavailable</div>
   </div>
-  <div>
-    <label for="password">password</label>
-    <input type="password" name="password" id="password">
+  <div class="Form__row">
+    <label for="password">Password</label>
+    <input class="Input" type="password" name="password" id="password">
   </div>
-  <div>
-    <button onclick="signup();">sign up</button>
+  <div class="Form__buttonRow">
+    <button class="Button" onclick="signup();">Sign Up</button>
   </div>
 </div>
 

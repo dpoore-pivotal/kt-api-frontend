@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>kt api frontend</title>
+<title>Kotlin API Signup Flow</title>
 
 <!-- Favicon -->
 <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+<link rel = "stylesheet" type = "text/css" href = "main.css" />
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
 
 <script
   src="https://code.jquery.com/jquery-3.3.1.min.js"
@@ -18,7 +21,11 @@
 		var usernameField = $('#username')[0];
 		var passwordField = $('#password')[0];
 
-		usernameField.setCustomValidity("");
+    var errorMessage = $('.InputErrorMessage')[0];
+
+    $(usernameField).removeClass('Input--error');
+    $(passwordField).removeClass('Input--error');
+    $(errorMessage).hide();
 
 		var dataPayload = JSON.stringify({
 			"username": usernameField.value,
@@ -31,32 +38,38 @@
 		  data: dataPayload,
 		  complete: function(jqxhr, status){
 		    if (status === 'error') {
-				usernameField.setCustomValidity("Invalid login.");
-			} else {
-				window.location = 'success.html';
-			}
+          $(usernameField).addClass('Input--error');
+          $(passwordField).addClass('Input--error');
+          $(errorMessage).show();
+  			} else {
+          var bearerToken = encodeURIComponent(jqxhr.getResponseHeader('Authorization'));
+  				window.location = 'success.html?token=' + bearerToken;
+  			}
 		  },
-		  dataType: "json",
 		  contentType : "application/json"
 		});
 	}
 </script>
 <body>
 
-<h1>login</h1>
-<div>
-  <div>
-    <label for="username">username</label>
-    <input name="username" id="username">
+  <div class="Title">
+    <h1>Login</h1>
   </div>
-  <div>
-    <label for="password">password</label>
-    <input type="password" name="password" id="password">
+
+  <div class="Form">
+    <div class="Form__row">
+      <label for="username">Username</label>
+      <input class="Input" name="username" id="username">
+      <div class="InputErrorMessage">Invalid login attempt</div>
+    </div>
+    <div class="Form__row">
+      <label for="password">Password</label>
+      <input class="Input" type="password" name="password" id="password">
+    </div>
+    <div class="Form__buttonRow">
+      <button class="Button" onclick="login();">Login</button>
+    </div>
   </div>
-  <div>
-    <button onclick="login();">login</button>
-  </div>
-</div>
 
 </body>
 </html>
