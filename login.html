@@ -3,6 +3,10 @@
 <head>
 <title>kt api frontend</title>
 
+<!-- Favicon -->
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+
 <script
   src="https://code.jquery.com/jquery-3.3.1.min.js"
   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
@@ -13,14 +17,14 @@
 	function login() {
 		var usernameField = $('#username')[0];
 		var passwordField = $('#password')[0];
-		
+
 		usernameField.setCustomValidity("");
-		
+
 		var dataPayload = JSON.stringify({
 			"username": usernameField.value,
 			"password": passwordField.value
 		});
-		
+
 		$.ajax({
 		  type: "POST",
 		  url: "https://kt-api-test.herokuapp.com/api/login",
