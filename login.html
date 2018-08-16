@@ -30,7 +30,7 @@
 		  url: "https://kt-api-test.herokuapp.com/api/login",
 		  data: dataPayload,
 		  complete: function(jqxhr, status){
-		    if (status === 403) {
+		    if (status === 'error') {
 				usernameField.setCustomValidity("Invalid login.");
 			} else {
 				window.location = 'success.html';

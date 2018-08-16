@@ -30,7 +30,7 @@
 		  url: "https://kt-api-test.herokuapp.com/api/signup",
 		  data: dataPayload,
 		  complete: function(jqxhr, status){
-		    if (status === 403) {
+		    if (status === 'error') {
 				usernameField.setCustomValidity("Username already taken.");
 			} else {
 				window.location = 'login.html';
