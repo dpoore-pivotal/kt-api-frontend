@@ -14,39 +14,41 @@
   src="https://code.jquery.com/jquery-3.3.1.min.js"
   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
   crossorigin="anonymous"></script>
+
+  <script>
+  	function signup() {
+  		var usernameField = $('#username')[0];
+  		var passwordField = $('#password')[0];
+
+      var errorMessage = $('.InputErrorMessage')[0];
+
+  		$(usernameField).removeClass('Input--error');
+      $(errorMessage).hide();
+
+  		var dataPayload = JSON.stringify({
+  			"username": usernameField.value,
+  			"password": passwordField.value
+  		});
+
+  		$.ajax({
+  		  type: "POST",
+  		  url: "https://kt-api-test.herokuapp.com/api/signup",
+  		  data: dataPayload,
+  		  complete: function(jqxhr, status){
+  		    if (status === 'error') {
+            $(errorMessage).show();
+    				$(usernameField).addClass('Input--error');
+    			} else {
+    				window.location = 'login.html';
+    			}
+  		  },
+  		  contentType : "application/json"
+  		});
+  	}
+  </script>
+
 </head>
 
-<script>
-	function signup() {
-		var usernameField = $('#username')[0];
-		var passwordField = $('#password')[0];
-
-    var errorMessage = $('.InputErrorMessage')[0];
-
-		$(usernameField).removeClass('Input--error');
-    $(errorMessage).hide();
-
-		var dataPayload = JSON.stringify({
-			"username": usernameField.value,
-			"password": passwordField.value
-		});
-
-		$.ajax({
-		  type: "POST",
-		  url: "https://kt-api-test.herokuapp.com/api/signup",
-		  data: dataPayload,
-		  complete: function(jqxhr, status){
-		    if (status === 'error') {
-          $(errorMessage).show();
-  				$(usernameField).addClass('Input--error');
-  			} else {
-  				window.location = 'login.html';
-  			}
-		  },
-		  contentType : "application/json"
-		});
-	}
-</script>
 <body>
 
 <div class="Title">
