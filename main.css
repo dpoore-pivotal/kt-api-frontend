@@ -65,6 +65,38 @@ body {
   color: red;
 }
 
-.Success {
+.Articles {
+  display: flex;
+  flex-direction: row;
+}
+
+.Article:not(:last-child) {
+  border-bottom: 1px solid lightgray;
+  margin-bottom: 10px;
+}
+
+.Article__title {
+  font-weight: bold;
+}
+
+.Article__content {
+  padding: 12px 0px;
+}
+
+.FetchArticles,
+.AddArticle {
+  flex: 1 0 auto;
+  display: flex;
+  justify-content: center;
+}
+
+.FetchArticles {
+  align-items: center;
+  flex-direction: column;
+}
+
+.Token {
+  font-size: 10px;
   text-align: center;
+  margin-top: 40px;
 }

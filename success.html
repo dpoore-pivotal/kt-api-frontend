@@ -6,7 +6,7 @@
   <link rel="icon" href="favicon.ico" type="image/x-icon">
 
   <link rel = "stylesheet" type = "text/css" href = "main.css" />
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
 
   <script
     src="https://code.jquery.com/jquery-3.3.1.min.js"
@@ -36,11 +36,35 @@
             var articlesSection = $('#articles')[0];
             $(articlesSection).empty();
             jqxhr.responseJSON.forEach(function(article) {
-              $(articlesSection).append('<div><h2>' + article.title + '</h2><div>' + article.content + '</div></div>');
+              $(articlesSection).append('<div class="Article"><div class="Article__title">' + article.title + '</div><div class="Article__content">' + article.content + '</div></div>');
             });
           }
         });
     };
+
+    function addArticle() {
+      var token = getParameterByName('token');
+      var titleField = $('#articleTitle')[0];
+  		var contentField = $('#articleContent')[0];
+
+  		var dataPayload = JSON.stringify({
+  			"title": titleField.value,
+  			"content": contentField.value
+  		});
+
+  		$.ajax({
+  		  type: "POST",
+  		  url: "https://kt-api-test.herokuapp.com/api/articles",
+        beforeSend: function(jqxhr, settings) {
+          jqxhr.setRequestHeader('Authorization', token);
+        },
+  		  data: dataPayload,
+  		  complete: function(jqxhr, status){
+          fetchArticles();
+  		  },
+  		  contentType : "application/json"
+  		});
+    }
   </script>
 </head>
 
@@ -51,20 +75,33 @@
   <h1>Login Successful!</h1>
 </div>
 
-<div class="Success">
-  <div class="Token" id="token">
+<div class="Articles">
+  <div class="FetchArticles">
+    <div class="ArticlesList" id="articles">
+    </div>
+    <button class="Button" onclick="fetchArticles();">
+      Fetch Articles
+    </button>
   </div>
-  <br>
-  <img src="success.jpeg" />
-  <br>
-  <br>
-  <button class="Button" onclick="fetchArticles();">
-    Fetch Articles
-  </button>
-  <br>
-  <br>
-  <div class="Articles" id="articles">
+
+  <div class="AddArticle">
+    <div class="Form">
+      <div class="Form__row">
+        <label for="articleTitle">Title</label>
+        <input class="Input" name="articleTitle" id="articleTitle">
+      </div>
+      <div class="Form__row">
+        <label for="articleContent">Content</label>
+        <input class="Input" name="articleContent" id="articleContent">
+      </div>
+      <div class="Form__buttonRow">
+        <button class="Button" onclick="addArticle();">Add Article</button>
+      </div>
+    </div>
   </div>
+</div>
+
+<div class="Token" id="token">
 </div>
 
 
