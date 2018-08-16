@@ -12,7 +12,37 @@
     src="https://code.jquery.com/jquery-3.3.1.min.js"
     integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
     crossorigin="anonymous"></script>
-  </head>
+
+  <script>
+    function getParameterByName(name, url) {
+      if (!url) url = window.location.href;
+      name = name.replace(/[\[\]]/g, '\\$&');
+      var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+          results = regex.exec(url);
+      if (!results) return null;
+      if (!results[2]) return '';
+      return decodeURIComponent(results[2].replace(/\+/g, ' '));
+    }
+
+    function fetchArticles() {
+        var token = getParameterByName('token');
+        $.ajax({
+          type: "GET",
+          url: "https://kt-api-test.herokuapp.com/api/articles",
+          beforeSend: function(jqxhr, settings) {
+            jqxhr.setRequestHeader('Authorization', token);
+          },
+          complete: function(jqxhr, status){
+            var articlesSection = $('#articles')[0];
+            $(articlesSection).empty();
+            jqxhr.responseJSON.forEach(function(article) {
+              $(articlesSection).append('<div><h2>' + article.title + '</h2><div>' + article.content + '</div></div>');
+            });
+          }
+        });
+    };
+  </script>
+</head>
 
 <title>Kotlin API Signup Flow</title>
 <body>
@@ -26,20 +56,19 @@
   </div>
   <br>
   <img src="success.jpeg" />
+  <br>
+  <br>
+  <button class="Button" onclick="fetchArticles();">
+    Fetch Articles
+  </button>
+  <br>
+  <br>
+  <div class="Articles" id="articles">
+  </div>
 </div>
 
 
 <script>
-  function getParameterByName(name, url) {
-    if (!url) url = window.location.href;
-    name = name.replace(/[\[\]]/g, '\\$&');
-    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
-        results = regex.exec(url);
-    if (!results) return null;
-    if (!results[2]) return '';
-    return decodeURIComponent(results[2].replace(/\+/g, ' '));
-  }
-
   var token = getParameterByName('token');
   $('#token').text('Your token is ' + token.substring(7));
 </script>
